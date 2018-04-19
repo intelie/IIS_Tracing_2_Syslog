@@ -1,6 +1,6 @@
 ﻿namespace iisTracing2syslog
 {
-	partial class Service1
+	partial class IISTracing2Syslog
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,10 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			components = new System.ComponentModel.Container();
-			this.ServiceName = "Service1";
+            this.eventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).BeginInit();
+            // 
+            // IISTracing2Syslog
+            // 
+            this.ServiceName = "IISTracing2Syslog";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).EndInit();
+
 		}
 
-		#endregion
-	}
+        #endregion
+
+        protected System.Diagnostics.EventLog eventLog;
+    }
 }
