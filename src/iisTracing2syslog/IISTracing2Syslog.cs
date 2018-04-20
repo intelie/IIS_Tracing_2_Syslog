@@ -27,31 +27,64 @@ namespace iisTracing2syslog
         
         protected override void OnStart(string[] args)
         {
-            eventLog.WriteEntry("Starting service");
-            DirectoryInfo directoryInfo = new DirectoryInfo("C:\\inetpub\\logs\\FailedReqLogFiles\\W3SVC1");
-            
-            _client = new SyslogClient("lognit.intelie", 5140, "UDP", false, null);
-            _client.AppName = "IISFailedRequest";
-            _client.PrependMessageLength = false;
-            _client.DiagnosticsEventLog = eventLog;
+            try
+            {
+                Configuration config = new Configuration();
 
-            // Create a new FileSystemWatcher and set its properties.
-            FileSystemWatcher watcher = new FileSystemWatcher();
-            watcher.Path = directoryInfo.FullName;
+                var syslogHost = config.SyslogHost;
+                var syslogPort = config.SyslogPort;
+                var logPath = config.LogPath;
 
-            //watcher.NotifyFilter = NotifyFilters.LastWrite;
+                if (syslogHost == null || syslogHost == "") throw new ArgumentException("Syslog server is not configured");
+                if (syslogPort == 0) throw new ArgumentException("Syslog server port is not configured");
+                if (logPath == null || logPath == "") throw new ArgumentException("Monitored log path is not configured");
 
-            watcher.Filter = IIS_TRACING_PATTERN;
+                DirectoryInfo directoryInfo = new DirectoryInfo(logPath);
 
-            // Add event handlers.
-            watcher.Created += new FileSystemEventHandler(OnChanged);
+                if (!directoryInfo.Exists) throw new ArgumentException("Monitored log path does not exist");
 
-            // Begin watching.
-            watcher.EnableRaisingEvents = true;
+                _client = new SyslogClient(syslogHost, 5140, "UDP", false, null);
+                _client.AppName = "IISFailedRequest";
+                _client.PrependMessageLength = false;
+                _client.DiagnosticsEventLog = eventLog;
 
-            _watcher = watcher;
+                // Create a new FileSystemWatcher and set its properties.
+                FileSystemWatcher watcher = new FileSystemWatcher();
+                watcher.Path = directoryInfo.FullName;
 
-            _client.Activate();
+                //watcher.NotifyFilter = NotifyFilters.LastWrite;
+
+                watcher.Filter = IIS_TRACING_PATTERN;
+
+                // Add event handlers.
+                watcher.Created += new FileSystemEventHandler(OnChanged);
+
+                // Begin watching.
+                watcher.EnableRaisingEvents = true;
+
+                _watcher = watcher;
+
+                _client.Activate();
+
+                eventLog.WriteEntry("Service started. Monitoring " + logPath);
+            }
+            catch (ArgumentException ae)
+            {
+                eventLog.WriteEntry("An error occured during the service startup: " + ae.Message, EventLogEntryType.Error);
+
+                if (System.Environment.UserInteractive) throw ae;
+
+                base.ExitCode = 87; // ERROR_INVALID_PARAMETER
+                base.Stop();
+            } catch (Exception e)
+            {
+                eventLog.WriteEntry("An error occured during the service startup: " + e.ToString(), EventLogEntryType.Error);
+
+                if (System.Environment.UserInteractive) throw e;
+
+                base.ExitCode = 352; // ERROR_FAIL_RESTART
+                base.Stop();
+            }
         }
         
         // Define the event handlers.
@@ -73,10 +106,16 @@ namespace iisTracing2syslog
         protected override void OnStop()
         {
             eventLog.WriteEntry("Stopping service");
-            _client.Disconnect();
-            _client.Dispose();
-            _watcher.EnableRaisingEvents = false;
-            _watcher.Dispose();
+            if (_client != null)
+            {
+                _client.Disconnect();
+                _client.Dispose();
+            }            
+            if (_watcher != null)
+            {
+                _watcher.EnableRaisingEvents = false;
+                _watcher.Dispose();
+            }            
         }
 
 

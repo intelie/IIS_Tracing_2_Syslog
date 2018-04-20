@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using iisTracing2syslog.Utils;
+using System.ComponentModel;
 using System.Configuration.Install;
 
 namespace iisTracing2syslog
@@ -17,6 +18,13 @@ namespace iisTracing2syslog
             {
                 System.Diagnostics.EventLog.CreateEventSource(
                     IISTracing2Syslog.EVENT_SOURCE, IISTracing2Syslog.EVENT_LOG);
+            }
+
+            Configuration config = new Configuration();
+            var currentConfigValue = config.SyslogHost;
+            if (currentConfigValue == null || currentConfigValue == "")
+            {
+                config.WriteDefaultConfiguration();
             }
         }
     }

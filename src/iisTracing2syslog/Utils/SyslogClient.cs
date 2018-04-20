@@ -485,9 +485,7 @@ namespace iisTracing2syslog.Utils
         public void Dispose()
         {
             try
-            {
-                LogDiagnosticInfo("RemoteSyslog5424Appender.Dispose()");
-
+            {                
                 _closing = true;
 
                 // give the sender thread some time to flush the messages
