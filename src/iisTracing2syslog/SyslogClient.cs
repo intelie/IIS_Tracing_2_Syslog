@@ -15,6 +15,10 @@ using System.Threading;
 
 namespace iisTracing2syslog
 {
+    /**
+     * This implementation was based on a Syslog RFC5424 appender for log4net
+     * https://github.com/cityindex/log4net.Appenders.Contrib/
+     * */
     internal class SyslogClient
     {
         // We use a fixed PRIVAL. 11 = user-level messages with severity ERROR

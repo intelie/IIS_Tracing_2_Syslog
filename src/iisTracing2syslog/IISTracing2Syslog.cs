@@ -35,7 +35,7 @@ namespace iisTracing2syslog
             eventLog.WriteEntry("Starting service");
             DirectoryInfo directoryInfo = new DirectoryInfo("C:\\inetpub\\logs\\FailedReqLogFiles\\W3SVC1");
             
-            _client = new SyslogClient("127.0.0.1", 5140, "UDP", false, null);
+            _client = new SyslogClient("lognit.intelie", 5140, "UDP", false, null);
             _client.AppName = "IISFailedRequest";
             _client.PrependMessageLength = false;
             _client.DiagnosticsEventLog = eventLog;

@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iisTracing2syslog", "iisTracing2syslog\iisTracing2syslog.csproj", "{6CC659BB-457E-4EEB-A95F-7D1DF0D3C245}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iisTracing2syslogTest", "iisTracing2syslogTest\iisTracing2syslogTest.csproj", "{643FA5B2-AC6C-4A62-B72B-6CE529D7D4A5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6CC659BB-457E-4EEB-A95F-7D1DF0D3C245} = {6CC659BB-457E-4EEB-A95F-7D1DF0D3C245}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
