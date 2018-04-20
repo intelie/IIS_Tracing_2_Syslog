@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using iisTracing2syslog.Utils;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.ServiceProcess;
 
 namespace iisTracing2syslog
 {

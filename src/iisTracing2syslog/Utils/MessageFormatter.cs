@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Xml;
 using System.Web.Script.Serialization;
+using System.Xml;
 
-namespace iisTracing2syslog
+namespace iisTracing2syslog.Utils
 {
     public class MessageFormatter
     {

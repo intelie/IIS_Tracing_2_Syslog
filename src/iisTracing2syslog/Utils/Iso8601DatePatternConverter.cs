@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iisTracing2syslog
+namespace iisTracing2syslog.Utils
 {
     internal class Iso8601DatePatternConverter
     {

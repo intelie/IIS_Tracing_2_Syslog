@@ -6,14 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
 
-namespace iisTracing2syslog
+namespace iisTracing2syslog.Utils
 {
     /**
      * This implementation was based on a Syslog RFC5424 appender for log4net

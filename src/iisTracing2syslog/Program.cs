@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Runtime.InteropServices;
+using System.ServiceProcess;
 
 namespace iisTracing2syslog
 {
-	static class Program
+    static class Program
 	{
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

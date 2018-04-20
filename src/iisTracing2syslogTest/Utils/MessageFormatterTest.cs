@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using iisTracing2syslog;
+﻿using iisTracing2syslog.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace iisTracing2syslogTest
+namespace iisTracing2syslogTest.Utils
 {
     [TestClass]
     public class MessageFormatterTest
